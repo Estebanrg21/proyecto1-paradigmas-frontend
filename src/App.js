@@ -13,6 +13,9 @@ import Periodo from './components/Periodo/Periodo';
 import ListMateria from './components/Materia/ListMateria';
 import AddMateria from './components/Materia/AddMateria';
 import Materia from './components/Materia/Materia';
+import ListMatricula from './components/Matricula/ListMatricula';
+import AddMatricula from './components/Matricula/AddMatricula';
+import Matricula from './components/Matricula/Matricula';
 function App() {
   return (<>
     <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -46,6 +49,15 @@ function App() {
             <li><Link to={"/materias/add"} className="dropdown-item ">Agregar materia</Link></li>
           </ul>
         </li>
+        <li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="#" id="matriculaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Matrícula
+          </a>
+          <ul className="dropdown-menu" aria-labelledby="matriculaDropdown">
+            <li><Link to={"/matriculas"} className="dropdown-item ">Lista de matrículas</Link></li>
+            <li><Link to={"/matriculas/add"} className="dropdown-item ">Agregar matrícula</Link></li>
+          </ul>
+        </li>
         <li className="nav-item">
           <Link to={"/logs"} className="nav-link">
             Log
@@ -65,7 +77,9 @@ function App() {
       <Route path="/materias" element={<ListMateria />} />
       <Route path="/materias/add" element={<AddMateria />} />
       <Route path="/materias/:id" element={<Materia />} />
-
+      <Route path="/matriculas" element={<ListMatricula />} />
+      <Route path="/matriculas/add" element={<AddMatricula />} />
+      <Route path="/matriculas/:id" element={<Matricula />} />
     </Routes>
   </>);
 }

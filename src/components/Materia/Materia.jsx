@@ -68,9 +68,17 @@ export default function Materia() {
             MateriaDataService.update(currentMateria.id, currentMateria)
                 .then(response => {
                     console.log(response.data);
+                    setCurrentMateria({
+                        id:response.data.id,
+                        periodo: response.data.periodo,
+                        descripcion: response.data.descripcion,
+                        cupos: response.data.cupos,
+                        matriculas:response.data.matriculas
+                    });
                     setMessage("La materia fue actualizada");
                 })
                 .catch(e => {
+                    setMessage(e.response.data.error);
                     console.log(e);
                 });
         }
@@ -147,7 +155,7 @@ export default function Materia() {
                         <p className="mt-2" style={{ textAlign: "center" }}>No existen matrículas para mostrar</p>
                         :
                         <div>
-                            <h4>Materias</h4>
+                            <h4>Matrículas</h4>
                             <TableMatricula
                                 matriculas={currentMateria.matriculas}
                                 hideMateria
@@ -158,7 +166,7 @@ export default function Materia() {
             ) : (
                 <div>
                     <br />
-                    <p style={{ textAlign: "center" }}>El materia no existe</p>
+                    <p style={{ textAlign: "center" }}>La materia no existe</p>
                 </div>
             )}
         </div>
