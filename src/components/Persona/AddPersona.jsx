@@ -9,10 +9,23 @@ export default function AddPersona(props) {
     };
     const [persona, setPersona] = useState(currentPersona);
     const [submitted, setSubmitted] = useState(false);
+    const [message, setMessage] = useState("");
 
     const handleInputChange = event => {
         const { name, value } = event.target;
         setPersona({ ...persona, [name]: value });
+    };
+
+    const validateData = () => {
+        let msg = "";
+        if (persona.identificacion === "" || persona.identificacion.trim().length === 0) 
+            msg = "La identificación no puede ir en blanco";
+        else if (persona.nombre === "" || persona.nombre.trim().length === 0)
+            msg = "El nombre no puede ir en blanco";
+        if (msg !== "") {
+            setMessage(msg);
+        }
+        return msg === "";
     };
 
     const savePersona = () => {
@@ -20,19 +33,21 @@ export default function AddPersona(props) {
             identificacion: persona.identificacion,
             nombre: persona.nombre
         };
-        PersonaDataService.create(data)
-            .then(response => {
-                setPersona({
-                    identificacion: response.data.identificacion,
-                    nombre: response.data.nombre
+        if (validateData()) {
+            PersonaDataService.create(data)
+                .then(response => {
+                    setPersona({
+                        identificacion: response.data.identificacion,
+                        nombre: response.data.nombre
+                    });
+                    setSubmitted(true);
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    alert(e.response.data.error);
+                    console.log(e);
                 });
-                setSubmitted(true);
-                console.log(response.data);
-            })
-            .catch(e => {
-                alert(e.response.data.error);
-                console.log(e);
-            });
+        }
     };
 
     const newPersona = () => {
@@ -54,6 +69,7 @@ export default function AddPersona(props) {
                         :
                         <div >
                             <h4 className="text-center mt-2">Persona</h4>
+                            <p className="form-message">{message}</p>
                             <form className="project-form">
                                 <TextInput
                                     label="Identificación"
@@ -71,7 +87,7 @@ export default function AddPersona(props) {
                                 />
 
                             </form>
-                            <div style={{width:"100%", display:"flex", justifyContent:"center"}} className="mt-2">
+                            <div style={{ width: "100%", display: "flex", justifyContent: "center" }} className="mt-2">
                                 <button
                                     type="submit"
                                     className="btn btn-success mt-2"

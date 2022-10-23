@@ -14,7 +14,7 @@ export default function TablePeriodo(props) {
             PeriodoDataService.remove(id)
                 .then(response => {
                     console.log(response.data);
-                    alert("Periodo eliminada correctamente");
+                    alert("Periodo eliminado correctamente");
                 })
                 .catch(e => {
                     console.log(e);

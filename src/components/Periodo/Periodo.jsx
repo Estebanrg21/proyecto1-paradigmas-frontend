@@ -41,16 +41,27 @@ export default function Periodo() {
         setCurrentPeriodo({ ...currentPeriodo, [name]: value });
     };
 
+    const validateData = () => {
+        let msg = "";
+        if (currentPeriodo.descripcion === "" || currentPeriodo.descripcion.trim().length === 0)
+            msg = "La descripción no puede ir en blanco";
+        if (msg !== "") {
+            setMessage(msg);
+        }
+        return msg === "";
+    };
 
     const updatePeriodo = () => {
-        PeriodoDataService.update(currentPeriodo.id, currentPeriodo)
-            .then(response => {
-                console.log(response.data);
-                setMessage("El periodo fue actualizado");
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        if (validateData()) {
+            PeriodoDataService.update(currentPeriodo.id, currentPeriodo)
+                .then(response => {
+                    console.log(response.data);
+                    setMessage("El periodo fue actualizado");
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     };
 
 

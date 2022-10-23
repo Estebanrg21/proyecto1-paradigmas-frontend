@@ -15,7 +15,7 @@ export default function Materia() {
         id: null,
         periodo: {},
         descripcion: "",
-        cupos: 0,
+        cupos: "",
         matriculas: [],
     };
     const [currentMateria, setCurrentMateria] = useState(initialMateriaState);
@@ -55,8 +55,10 @@ export default function Materia() {
 
     const validateData = () => {
         let msg = "";
-        if (currentMateria.descripcion === "") msg = "La descripción no puede ir en blanco";
+        if (currentMateria.descripcion === "" || currentMateria.descripcion.trim().length === 0)
+            msg = "La descripción no puede ir en blanco";
         if (Object.keys(currentMateria.periodo).length === 0 || currentMateria.periodo.id === "-1") msg = "Debe seleccionar un periodo";
+        else if (currentMateria.cupos === "") msg = "Los cupos no pueden ir en blanco";
         if (msg !== "") {
             setMessage(msg);
         }

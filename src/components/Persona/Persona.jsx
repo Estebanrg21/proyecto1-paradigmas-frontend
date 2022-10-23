@@ -43,16 +43,29 @@ export default function Personas() {
         setCurrentPersona({ ...currentPersona, [name]: value });
     };
 
+    const validateData = () => {
+        let msg = "";
+        if (currentPersona.identificacion === "" || currentPersona.identificacion.trim().length === 0)
+            msg = "La identificación no puede ir en blanco";
+        else if (currentPersona.nombre === "" || currentPersona.nombre.trim().length === 0)
+            msg = "El nombre no puede ir en blanco";
+        if (msg !== "") {
+            setMessage(msg);
+        }
+        return msg === "";
+    };
 
     const updatePersona = () => {
-        PersonaDataService.update(currentPersona.id, currentPersona)
-            .then(response => {
-                console.log(response.data);
-                setMessage("La persona fue actualizada");
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        if (validateData()) {
+            PersonaDataService.update(currentPersona.id, currentPersona)
+                .then(response => {
+                    console.log(response.data);
+                    setMessage("La persona fue actualizada");
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     };
 
 
@@ -88,7 +101,7 @@ export default function Personas() {
                     />
 
                     {(currentPersona.matriculas.length === 0) ?
-                        <p className="mt-2" style={{textAlign:"center"}}>No existen matrículas para mostrar</p>
+                        <p className="mt-2" style={{ textAlign: "center" }}>No existen matrículas para mostrar</p>
                         :
                         <div>
                             <h4>Matrículas</h4>
@@ -102,7 +115,7 @@ export default function Personas() {
             ) : (
                 <div>
                     <br />
-                    <p style={{textAlign:"center"}}>La persona no existe</p>
+                    <p style={{ textAlign: "center" }}>La persona no existe</p>
                 </div>
             )}
         </div>
