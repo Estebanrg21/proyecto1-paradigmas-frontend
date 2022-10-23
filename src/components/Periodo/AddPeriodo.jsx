@@ -1,30 +1,28 @@
 import React, { useState } from "react";
-import { PersonaDataService } from "./util";
+import { PeriodoDataService } from "./util";
 import TextInput from "../form-components/TextInput";
-export default function AddPersona(props) {
-    const currentPersona = {
+
+export default function AddPeriodo(props) {
+    const currentPeriodo = {
         id: null,
-        identificacion: "",
-        nombre: ""
+        descripcion: ""
     };
-    const [persona, setPersona] = useState(currentPersona);
+    const [periodo, setPeriodo] = useState(currentPeriodo);
     const [submitted, setSubmitted] = useState(false);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setPersona({ ...persona, [name]: value });
+        setPeriodo({ ...periodo, [name]: value });
     };
 
-    const savePersona = () => {
+    const savePeriodo = () => {
         let data = {
-            identificacion: persona.identificacion,
-            nombre: persona.nombre
+            descripcion: periodo.descripcion
         };
-        PersonaDataService.create(data)
+        PeriodoDataService.create(data)
             .then(response => {
-                setPersona({
-                    identificacion: response.data.identificacion,
-                    nombre: response.data.nombre
+                setPeriodo({
+                    descripcion: response.data.descripcion
                 });
                 setSubmitted(true);
                 console.log(response.data);
@@ -35,8 +33,8 @@ export default function AddPersona(props) {
             });
     };
 
-    const newPersona = () => {
-        setPersona(currentPersona);
+    const newPeriodo = () => {
+        setPeriodo(currentPeriodo);
         setSubmitted(false);
     };
 
@@ -47,26 +45,19 @@ export default function AddPersona(props) {
                     submitted ?
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "50vh", justifyContent: "center" }}>
                             <h4 className="mt-2 mb-2" style={{ textAlign: "center" }}>Almacenado Corretamente</h4>
-                            <button className="btn btn-success" onClick={newPersona}>
-                                Agregar nueva persona
+                            <button className="btn btn-success" onClick={newPeriodo}>
+                                Agregar nuevo periodo
                             </button>
                         </div>
                         :
                         <div >
-                            <h4 className="text-center mt-2">Persona</h4>
+                            <h4 className="text-center mt-2">Periodo</h4>
                             <form className="project-form">
                                 <TextInput
-                                    label="Identificación"
-                                    id="identificacion"
-                                    name="identificacion"
-                                    value={persona.identificacion}
-                                    changeHandler={handleInputChange}
-                                />
-                                <TextInput
-                                    label="Nombre"
-                                    id="nombre"
-                                    name="nombre"
-                                    value={persona.nombre}
+                                    label="Descripcion"
+                                    id="descripcion"
+                                    name="descripcion"
+                                    value={periodo.descripcion}
                                     changeHandler={handleInputChange}
                                 />
 
@@ -75,7 +66,7 @@ export default function AddPersona(props) {
                                 <button
                                     type="submit"
                                     className="btn btn-success mt-2"
-                                    onClick={savePersona}
+                                    onClick={savePeriodo}
                                 >
                                     Crear
                                 </button>

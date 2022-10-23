@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from "react";
-import TablePersona from "./TablePersona";
-import { PersonaDataService } from "./util";
+import TablePeriodo from "./TablePeriodo";
+import { PeriodoDataService } from "./util";
 
-export default function ListPersona(props) {
-    const [personas, setPersonas] = useState([]);
+export default function ListPeriodo(props) {
+    const [periodos, setPeriodos] = useState([]);
 
     useEffect(() => {
-        retrievePersonas();
+        retrievePeriodos();
     }, []);
 
-    const retrievePersonas = () => {
-        PersonaDataService.getAll()
+    const retrievePeriodos = () => {
+        PeriodoDataService.getAll()
             .then(response => {
-                setPersonas(response.data);
+                setPeriodos(response.data);
                 console.log(response.data);
             })
             .catch(e => {
-                alert("No se pudo cargar las personas");
+                alert("No se pudo cargar los periodos");
                 console.log(e);
             });
     };
 
     const refreshList = () => {
-        retrievePersonas();
+        retrievePeriodos();
     };
     return (
         <>
             <div className="main-container">
-                <h4 className="mt-2 mb-2" style={{ textAlign: "center" }}>Personas</h4>
-                {personas.length !== 0 ?
+                <h4 className="mt-2 mb-2" style={{ textAlign: "center" }}>Periodos</h4>
+                {periodos.length !== 0 ?
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         <p
                             style={{ textDecoration: "underline", fontSize: "small", alignSelf: "flex-end", cursor:"pointer" }}
                             onClick={refreshList}
                         >Refrescar tabla</p>
-                        <TablePersona
-                            personas={personas}
+                        <TablePeriodo
+                            periodos={periodos}
                         />
                     </div>
                     :
