@@ -16,6 +16,7 @@ import Materia from './components/Materia/Materia';
 import ListMatricula from './components/Matricula/ListMatricula';
 import AddMatricula from './components/Matricula/AddMatricula';
 import Matricula from './components/Matricula/Matricula';
+import Index from './components/Index';
 function App() {
   return (<>
     <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -66,7 +67,7 @@ function App() {
       </ul>
     </nav>
     <Routes>
-    <Route path="/" element={<p>Index del sitio</p>} />
+    <Route path="/" element={<Index />} />
       <Route path="/logs" element={<LogList />} />
       <Route path="/personas" element={<PersonaList />} />
       <Route path="/personas/add" element={<AddPersona />} />
