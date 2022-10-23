@@ -28,9 +28,10 @@ export default function AddMateria(props) {
     };
 
     const validateData = () => {
+        console.log(materia);
         let msg = "";
         if (materia.descripcion === "") msg = "La descripción no puede ir en blanco";
-        if (Object.keys(materia.periodo).length === 0) msg = "Debe seleccionar un periodo";
+        if (Object.keys(materia.periodo).length === 0 || materia.periodo.id === "-1") msg = "Debe seleccionar un periodo";
         if (msg !== "") {
             setMessage(msg);
         }
@@ -100,7 +101,7 @@ export default function AddMateria(props) {
                                     id="periodo"
                                     options={
                                         [
-                                            <option key="selectPlaceholder">Seleccione un periodo</option>,
+                                            <option key="selectPlaceholder" value="-1">Seleccione un periodo</option>,
                                             ...periodos.map(periodo =>
                                                 <option key={periodo.id} value={periodo.id}>{periodo.descripcion}</option>
                                             )
